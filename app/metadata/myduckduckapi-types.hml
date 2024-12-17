@@ -1,0 +1,310 @@
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: myduckduckapi
+  dataConnectorScalarType: String
+  representation: String
+  graphql:
+    comparisonExpressionTypeName: StringComparisonExp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: StringBoolExp
+  operand:
+    scalar:
+      type: String
+      comparisonOperators:
+        - name: _eq
+          argumentType: String!
+        - name: _glob
+          argumentType: String!
+        - name: _gt
+          argumentType: String!
+        - name: _gte
+          argumentType: String!
+        - name: _like
+          argumentType: String!
+        - name: _lt
+          argumentType: String!
+        - name: _lte
+          argumentType: String!
+        - name: _neq
+          argumentType: String!
+      dataConnectorOperatorMapping:
+        - dataConnectorName: myduckduckapi
+          dataConnectorScalarType: String
+          operatorMapping: {}
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: StringBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: StringAggExp
+  operand:
+    scalar:
+      aggregatedType: String
+      aggregationFunctions: []
+      dataConnectorAggregationFunctionMapping:
+        - dataConnectorName: myduckduckapi
+          dataConnectorScalarType: String
+          functionMapping: {}
+  count:
+    enable: true
+  countDistinct:
+    enable: true
+  graphql:
+    selectTypeName: StringAggExp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: StringOrderByExp
+  operand:
+    scalar:
+      orderedType: String
+      enableOrderByDirections:
+        enableAll: true
+  graphql:
+    expressionTypeName: StringOrderByExp
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: BigInt
+  graphql:
+    typeName: BigInt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: BigIntBoolExp
+  operand:
+    scalar:
+      type: BigInt
+      comparisonOperators:
+        - name: _eq
+          argumentType: BigInt!
+        - name: _gt
+          argumentType: BigInt!
+        - name: _gte
+          argumentType: BigInt!
+        - name: _lt
+          argumentType: BigInt!
+        - name: _lte
+          argumentType: BigInt!
+        - name: _neq
+          argumentType: BigInt!
+      dataConnectorOperatorMapping:
+        - dataConnectorName: myduckduckapi
+          dataConnectorScalarType: BigInt
+          operatorMapping: {}
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: BigIntBoolExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: myduckduckapi
+  dataConnectorScalarType: BigInt
+  representation: BigInt
+  graphql:
+    comparisonExpressionTypeName: BigIntComparisonExp
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Timestamp
+  graphql:
+    typeName: Timestamp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: TimestampBoolExp
+  operand:
+    scalar:
+      type: Timestamp
+      comparisonOperators:
+        - name: _eq
+          argumentType: Timestamp!
+        - name: _gt
+          argumentType: Timestamp!
+        - name: _gte
+          argumentType: Timestamp!
+        - name: _lt
+          argumentType: Timestamp!
+        - name: _lte
+          argumentType: Timestamp!
+        - name: _neq
+          argumentType: Timestamp!
+      dataConnectorOperatorMapping:
+        - dataConnectorName: myduckduckapi
+          dataConnectorScalarType: Timestamp
+          operatorMapping: {}
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: TimestampBoolExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: myduckduckapi
+  dataConnectorScalarType: Timestamp
+  representation: Timestamp
+  graphql:
+    comparisonExpressionTypeName: TimestampComparisonExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: BigIntAggExp
+  operand:
+    scalar:
+      aggregatedType: BigInt
+      aggregationFunctions: []
+      dataConnectorAggregationFunctionMapping:
+        - dataConnectorName: myduckduckapi
+          dataConnectorScalarType: BigInt
+          functionMapping: {}
+  count:
+    enable: true
+  countDistinct:
+    enable: true
+  graphql:
+    selectTypeName: BigIntAggExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: TimestampAggExp
+  operand:
+    scalar:
+      aggregatedType: Timestamp
+      aggregationFunctions: []
+      dataConnectorAggregationFunctionMapping:
+        - dataConnectorName: myduckduckapi
+          dataConnectorScalarType: Timestamp
+          functionMapping: {}
+  count:
+    enable: true
+  countDistinct:
+    enable: true
+  graphql:
+    selectTypeName: TimestampAggExp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: BigIntOrderByExp
+  operand:
+    scalar:
+      orderedType: BigInt
+      enableOrderByDirections:
+        enableAll: true
+  graphql:
+    expressionTypeName: BigIntOrderByExp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: TimestampOrderByExp
+  operand:
+    scalar:
+      orderedType: Timestamp
+      enableOrderByDirections:
+        enableAll: true
+  graphql:
+    expressionTypeName: TimestampOrderByExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: myduckduckapi
+  dataConnectorScalarType: Boolean
+  representation: Boolean
+  graphql:
+    comparisonExpressionTypeName: BooleanComparisonExp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: BooleanBoolExp
+  operand:
+    scalar:
+      type: Boolean
+      comparisonOperators:
+        - name: _eq
+          argumentType: Boolean!
+      dataConnectorOperatorMapping:
+        - dataConnectorName: myduckduckapi
+          dataConnectorScalarType: Boolean
+          operatorMapping: {}
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: BooleanBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: BooleanAggExp
+  operand:
+    scalar:
+      aggregatedType: Boolean
+      aggregationFunctions: []
+      dataConnectorAggregationFunctionMapping:
+        - dataConnectorName: myduckduckapi
+          dataConnectorScalarType: Boolean
+          functionMapping: {}
+  count:
+    enable: true
+  countDistinct:
+    enable: true
+  graphql:
+    selectTypeName: BooleanAggExp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: BooleanOrderByExp
+  operand:
+    scalar:
+      orderedType: Boolean
+      enableOrderByDirections:
+        enableAll: true
+  graphql:
+    expressionTypeName: BooleanOrderByExp
+

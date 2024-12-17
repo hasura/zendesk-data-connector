@@ -1,0 +1,7 @@
+.hasura-connector/
+*.hml
+node_modules/
+.env*
+compose.yaml
+duck.db
+duck.db.bak

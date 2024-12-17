@@ -1,0 +1,490 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: tickets
+  fields:
+    - name: id
+      type: BigInt
+      description: The unique identifier for the ticket
+    - name: subject
+      type: String
+      description: |
+        The main title or headline for the ticket
+        Display prominently for the user to identify the ticket
+    - name: description
+      type: String
+    - name: status
+      type: String
+      description: |
+        Allowed values are "new", "open", "pending", "hold", "solved", or "closed"
+    - name: priority
+      type: String
+      description: |
+        Allowed values are "urgent", "high", "normal", or "low"
+    - name: type
+      type: String
+      description: |
+        Allowed values are "problem", "incident", "question", or "task"
+    - name: created_at
+      type: Timestamp
+    - name: assignee_id
+      type: BigInt
+      description: |
+        The agent currently assigned to the ticket
+    - name: requester_id
+      type: BigInt
+      description: |
+        The user who requested this ticket
+    - name: submitter_id
+      type: BigInt
+      description: |
+        The user who submitted the ticket
+    - name: tags
+      type: String
+    - name: updated_at
+      type: Timestamp
+    - name: url
+      type: String
+    - name: via_channel
+      type: String
+      description: |
+        How the ticket or event was created.
+        There are many possible values, some examples are: email, web, api, mobile.
+    - name: brand_id
+      type: BigInt
+    - name: group_id
+      type: BigInt
+    - name: organization_id
+      type: BigInt
+  graphql:
+    typeName: tickets
+    inputTypeName: tickets_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: myduckduckapi
+      dataConnectorObjectType: tickets
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: tickets
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - assignee_id
+          - brand_id
+          - created_at
+          - description
+          - group_id
+          - id
+          - organization_id
+          - priority
+          - requester_id
+          - status
+          - subject
+          - submitter_id
+          - tags
+          - type
+          - updated_at
+          - url
+          - via_channel
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: tickets_bool_exp
+  operand:
+    object:
+      type: tickets
+      comparableFields:
+        - fieldName: assignee_id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: brand_id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: created_at
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: description
+          booleanExpressionType: StringBoolExp
+        - fieldName: group_id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: organization_id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: priority
+          booleanExpressionType: StringBoolExp
+        - fieldName: requester_id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: status
+          booleanExpressionType: StringBoolExp
+        - fieldName: subject
+          booleanExpressionType: StringBoolExp
+        - fieldName: submitter_id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: tags
+          booleanExpressionType: StringBoolExp
+        - fieldName: type
+          booleanExpressionType: StringBoolExp
+        - fieldName: updated_at
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: url
+          booleanExpressionType: StringBoolExp
+        - fieldName: via_channel
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: tickets_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: tickets_agg_exp
+  operand:
+    object:
+      aggregatedType: tickets
+      aggregatableFields:
+        - fieldName: assignee_id
+          aggregateExpression: BigIntAggExp
+        - fieldName: brand_id
+          aggregateExpression: BigIntAggExp
+        - fieldName: created_at
+          aggregateExpression: TimestampAggExp
+        - fieldName: description
+          aggregateExpression: StringAggExp
+        - fieldName: group_id
+          aggregateExpression: BigIntAggExp
+        - fieldName: id
+          aggregateExpression: BigIntAggExp
+        - fieldName: organization_id
+          aggregateExpression: BigIntAggExp
+        - fieldName: priority
+          aggregateExpression: StringAggExp
+        - fieldName: requester_id
+          aggregateExpression: BigIntAggExp
+        - fieldName: status
+          aggregateExpression: StringAggExp
+        - fieldName: subject
+          aggregateExpression: StringAggExp
+        - fieldName: submitter_id
+          aggregateExpression: BigIntAggExp
+        - fieldName: tags
+          aggregateExpression: StringAggExp
+        - fieldName: type
+          aggregateExpression: StringAggExp
+        - fieldName: updated_at
+          aggregateExpression: TimestampAggExp
+        - fieldName: url
+          aggregateExpression: StringAggExp
+        - fieldName: via_channel
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: tickets_agg_exp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: tickets_order_by_exp
+  operand:
+    object:
+      orderedType: tickets
+      orderableFields:
+        - fieldName: assignee_id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: brand_id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: created_at
+          orderByExpression: TimestampOrderByExp
+        - fieldName: description
+          orderByExpression: StringOrderByExp
+        - fieldName: group_id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: organization_id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: priority
+          orderByExpression: StringOrderByExp
+        - fieldName: requester_id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: status
+          orderByExpression: StringOrderByExp
+        - fieldName: subject
+          orderByExpression: StringOrderByExp
+        - fieldName: submitter_id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: tags
+          orderByExpression: StringOrderByExp
+        - fieldName: type
+          orderByExpression: StringOrderByExp
+        - fieldName: updated_at
+          orderByExpression: TimestampOrderByExp
+        - fieldName: url
+          orderByExpression: StringOrderByExp
+        - fieldName: via_channel
+          orderByExpression: StringOrderByExp
+      orderableRelationships: []
+  graphql:
+    expressionTypeName: tickets_order_by_exp
+
+---
+kind: Model
+version: v2
+definition:
+  name: tickets
+  description: This table contains tickets synced from Zendesk
+  objectType: tickets
+  source:
+    dataConnectorName: myduckduckapi
+    collection: tickets
+  filterExpressionType: tickets_bool_exp
+  aggregateExpression: tickets_agg_exp
+  orderByExpression: tickets_order_by_exp
+  graphql:
+    selectMany:
+      queryRootField: tickets
+      subscription:
+        rootField: tickets
+    selectUniques: []
+    filterInputTypeName: tickets_filter_input
+    aggregate:
+      queryRootField: tickets_aggregate
+      subscription:
+        rootField: tickets_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: tickets
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: ticket_assignee
+  sourceType: tickets
+  target:
+    model:
+      name: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: assignee_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: assigned_tickets
+  sourceType: users
+  target:
+    model:
+      name: tickets
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: assignee_id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: ticket_requester
+  sourceType: tickets
+  target:
+    model:
+      name: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: requester_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: requested_tickets
+  sourceType: users
+  target:
+    model:
+      name: tickets
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: requester_id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: ticket_submitter
+  sourceType: tickets
+  target:
+    model:
+      name: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: submitter_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: submitted_tickets
+  sourceType: users
+  target:
+    model:
+      name: tickets
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: submitter_id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: ticket_group
+  sourceType: tickets
+  target:
+    model:
+      name: groups
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: group_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: group_tickets
+  sourceType: groups
+  target:
+    model:
+      name: tickets
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: group_id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: ticket_organization
+  sourceType: tickets
+  target:
+    model:
+      name: organizations
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: organization_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: organization_tickets
+  sourceType: organizations
+  target:
+    model:
+      name: tickets
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: organization_id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: ticket_brand
+  sourceType: tickets
+  target:
+    model:
+      name: brands
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: brand_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: brand_tickets
+  sourceType: brands
+  target:
+    model:
+      name: tickets
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: brand_id

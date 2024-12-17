@@ -1,0 +1,6 @@
+node_modules/
+duck.db
+duck.db.wal
+duckdb-persist
+github.index.ts
+github.functions.ts

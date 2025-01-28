@@ -4,10 +4,12 @@
 
 ```bash
 cp .env.development .env
+ddn project init --with-promptql
+ddn supergraph build local
 ddn run docker-start-watch
 
 cd app/connector/myduckduckapi
-npm link ndc-duckduckapi # to the multitenant development version at https://github.com/hasura/ndc-duckduckapi/pull/12
+npm link @hasura/ndc-duckduckapi # to the multitenant development version at https://github.com/hasura/ndc-duckduckapi/pull/12
 ./start-dev.sh
 ```
 

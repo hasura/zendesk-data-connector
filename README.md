@@ -9,6 +9,8 @@ cp .env.development .env
 
 ddn supergraph build local
 
+ddn project init
+
 ddn run docker-start
 ```
 
@@ -38,7 +40,6 @@ Use the PromptQL playground
 ## Deploy and Share
 
 ```bash
-ddn project init
 ddn supergraph build create
 ddn console
 ```

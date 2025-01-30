@@ -1,0 +1,258 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: users
+  fields:
+    - name: id
+      type: BigInt
+    - name: name
+      type: String
+    - name: email
+      type: String
+    - name: organization_id
+      type: BigInt
+    - name: created_at
+      type: Timestamp
+    - name: details
+      type: String
+    - name: notes
+      type: String
+    - name: phone
+      type: String
+    - name: tags
+      type: String
+    - name: time_zone
+      type: String
+      description: |
+        IANA time zone
+    - name: updated_at
+      type: Timestamp
+    - name: url
+      type: String
+    - name: active
+      type: Boolean
+  graphql:
+    typeName: users
+    inputTypeName: users_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: myduckduckapi
+      dataConnectorObjectType: users
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: users
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - active
+          - created_at
+          - details
+          - email
+          - id
+          - name
+          - notes
+          - organization_id
+          - phone
+          - tags
+          - time_zone
+          - updated_at
+          - url
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: users_bool_exp
+  operand:
+    object:
+      type: users
+      comparableFields:
+        - fieldName: active
+          booleanExpressionType: BooleanBoolExp
+        - fieldName: created_at
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: details
+          booleanExpressionType: StringBoolExp
+        - fieldName: email
+          booleanExpressionType: StringBoolExp
+        - fieldName: id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: name
+          booleanExpressionType: StringBoolExp
+        - fieldName: notes
+          booleanExpressionType: StringBoolExp
+        - fieldName: organization_id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: phone
+          booleanExpressionType: StringBoolExp
+        - fieldName: tags
+          booleanExpressionType: StringBoolExp
+        - fieldName: time_zone
+          booleanExpressionType: StringBoolExp
+        - fieldName: updated_at
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: url
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: users_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: users_agg_exp
+  operand:
+    object:
+      aggregatedType: users
+      aggregatableFields:
+        - fieldName: active
+          aggregateExpression: BooleanAggExp
+        - fieldName: created_at
+          aggregateExpression: TimestampAggExp
+        - fieldName: details
+          aggregateExpression: StringAggExp
+        - fieldName: email
+          aggregateExpression: StringAggExp
+        - fieldName: id
+          aggregateExpression: BigIntAggExp
+        - fieldName: name
+          aggregateExpression: StringAggExp
+        - fieldName: notes
+          aggregateExpression: StringAggExp
+        - fieldName: organization_id
+          aggregateExpression: BigIntAggExp
+        - fieldName: phone
+          aggregateExpression: StringAggExp
+        - fieldName: tags
+          aggregateExpression: StringAggExp
+        - fieldName: time_zone
+          aggregateExpression: StringAggExp
+        - fieldName: updated_at
+          aggregateExpression: TimestampAggExp
+        - fieldName: url
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: users_agg_exp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: users_order_by_exp
+  operand:
+    object:
+      orderedType: users
+      orderableFields:
+        - fieldName: active
+          orderByExpression: BooleanOrderByExp
+        - fieldName: created_at
+          orderByExpression: TimestampOrderByExp
+        - fieldName: details
+          orderByExpression: StringOrderByExp
+        - fieldName: email
+          orderByExpression: StringOrderByExp
+        - fieldName: id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: name
+          orderByExpression: StringOrderByExp
+        - fieldName: notes
+          orderByExpression: StringOrderByExp
+        - fieldName: organization_id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: phone
+          orderByExpression: StringOrderByExp
+        - fieldName: tags
+          orderByExpression: StringOrderByExp
+        - fieldName: time_zone
+          orderByExpression: StringOrderByExp
+        - fieldName: updated_at
+          orderByExpression: TimestampOrderByExp
+        - fieldName: url
+          orderByExpression: StringOrderByExp
+      orderableRelationships: []
+  graphql:
+    expressionTypeName: users_order_by_exp
+
+---
+kind: Model
+version: v2
+definition:
+  name: users
+  description: |
+    Zendesk users, can be end user customers or agents
+  objectType: users
+  source:
+    dataConnectorName: myduckduckapi
+    collection: users
+  filterExpressionType: users_bool_exp
+  aggregateExpression: users_agg_exp
+  orderByExpression: users_order_by_exp
+  graphql:
+    selectMany:
+      queryRootField: users
+      subscription:
+        rootField: users
+    selectUniques: []
+    filterInputTypeName: users_filter_input
+    aggregate:
+      queryRootField: users_aggregate
+      subscription:
+        rootField: users_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: users
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: user_organization
+  sourceType: users
+  target:
+    model:
+      name: organizations
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: organization_id
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: organization_users
+  sourceType: organizations
+  target:
+    model:
+      name: tickets
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: organization_id

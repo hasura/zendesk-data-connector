@@ -1,22 +1,50 @@
 # Zendesk data connector
 
-## Setup
+## Setup services
 
 ```bash
 cp .env.development .env
-ddn project init --with-promptql
-ddn supergraph build local
-ddn run docker-start-watch
 
-cd app/connector/myduckduckapi
-npm link @hasura/ndc-duckduckapi # to the multitenant development version at https://github.com/hasura/ndc-duckduckapi/pull/12
-./start-dev.sh
+# edit .env to set the ZENDESK_BASE_URL
+
+ddn supergraph build local
+
+ddn run docker-start
 ```
+
+## Setup OAuth client
+
+Create a new OAuth client on the Zendesk admin page
+https://YOUR_ZENDESK_SUBDOMAIN.zendesk.com/admin/apps-integrations/apis/zendesk-api/oauth_clients
+
+Open the console `ddn console --local`
+
+On the OAuth Playground tab, add the OAuth client provider
+- Name: 'zendesk'
+- Scopes: 'read'
+- Authorization URL: https://YOUR_ZENDESK_SUBDOMAIN.zendesk.com/oauth/authorizations/new
+- Token URL: https://YOUR_ZENDESK_SUBDOMAIN.zendesk.com/oauth/tokens
+- PKCE: 'true'
+- Client ID and Secret: as configured on the Zendesk admin page
 
 ## Usage
 
-Use this console https://github.com/hasura/v3-console/pull/1301
+On the OAuth Playground tab
+- Login using the zendesk OAuth provider
+- Run the sync job 'zendesk-loader'
 
-On the OAuth Playground login then run the sync job
+Use the PromptQL playground
 
-Use the promptql playground
+## Deploy and Share
+
+```bash
+ddn project init
+ddn supergraph build create
+ddn console
+```
+
+On the OAuth Playground tab
+- Add the OAuth client provider
+- Login and run the sync job
+
+Use the PromptQL playground

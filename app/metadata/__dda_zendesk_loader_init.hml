@@ -1,0 +1,24 @@
+---
+kind: Command
+version: v1
+definition:
+  name: __dda_zendesk_loader_init
+  outputType: String!
+  source:
+    dataConnectorName: myduckduckapi
+    dataConnectorCommand:
+      procedure: __dda_zendesk_loader_init
+  graphql:
+    rootFieldName: _dda_zendesk_loader_init
+    rootFieldKind: Mutation
+  description: $ddn.jobs.zendesk-loader.init
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: __dda_zendesk_loader_init
+  permissions:
+    - role: admin
+      allowExecution: true
+

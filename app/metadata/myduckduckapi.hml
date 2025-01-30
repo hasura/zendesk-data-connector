@@ -1,0 +1,783 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: myduckduckapi
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: APP_MYDUCKDUCKAPI_READ_URL
+      write:
+        valueFromEnv: APP_MYDUCKDUCKAPI_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: APP_MYDUCKDUCKAPI_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      scalar_types:
+        BigInt:
+          representation:
+            type: biginteger
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: BigInt
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: BigInt
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: BigInt
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: BigInt
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: BigInt
+        Boolean:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+        Float:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: Float
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: Float
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: Float
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: Float
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: Float
+        HugeInt:
+          representation:
+            type: biginteger
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: HugeInt
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: HugeInt
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: HugeInt
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: HugeInt
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: HugeInt
+        Int:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: Int
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: Int
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: Int
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: Int
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: Int
+        JSON:
+          representation:
+            type: json
+          aggregate_functions: {}
+          comparison_operators: {}
+        String:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _glob:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _like:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+        Timestamp:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: Timestamp
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: Timestamp
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: Timestamp
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: Timestamp
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: Timestamp
+        UBigInt:
+          representation:
+            type: biginteger
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: UBigInt
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: UBigInt
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: UBigInt
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: UBigInt
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: UBigInt
+        UHugeInt:
+          representation:
+            type: biginteger
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: UHugeInt
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: UHugeInt
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: UHugeInt
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: UHugeInt
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: UHugeInt
+      object_types:
+        brands:
+          description: No description available
+          fields:
+            brand_url:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            created_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            name:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            updated_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            url:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+        groups:
+          description: No description available
+          fields:
+            created_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            description:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            name:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            updated_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            url:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+        incremental_sync_cursors:
+          description: No description available
+          fields:
+            cursor:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            model:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+        organizations:
+          description: No description available
+          fields:
+            created_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            details:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            domain_names:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            group_id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            name:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            notes:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            tags:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            updated_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            url:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+        tickets:
+          description: No description available
+          fields:
+            assignee_id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            brand_id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            created_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            description:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            group_id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            organization_id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            priority:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            requester_id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            status:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            subject:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            submitter_id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            tags:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            type:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            updated_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            url:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            via_channel:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+        users:
+          description: No description available
+          fields:
+            active:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Boolean
+            created_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            details:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            email:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            name:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            notes:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            organization_id:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: BigInt
+            phone:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            tags:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            time_zone:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            updated_at:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Timestamp
+            url:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+      collections:
+        - name: brands
+          description: No description available
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          type: brands
+          uniqueness_constraints: {}
+          foreign_keys: {}
+        - name: groups
+          description: No description available
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          type: groups
+          uniqueness_constraints: {}
+          foreign_keys: {}
+        - name: incremental_sync_cursors
+          description: No description available
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          type: incremental_sync_cursors
+          uniqueness_constraints: {}
+          foreign_keys: {}
+        - name: organizations
+          description: No description available
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          type: organizations
+          uniqueness_constraints: {}
+          foreign_keys: {}
+        - name: tickets
+          description: No description available
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          type: tickets
+          uniqueness_constraints: {}
+          foreign_keys: {}
+        - name: users
+          description: No description available
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          type: users
+          uniqueness_constraints: {}
+          foreign_keys: {}
+      functions:
+        - name: __dda_zendesk_loader_status
+          description: $ddn.jobs.zendesk-loader.status
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          result_type:
+            type: named
+            name: String
+      procedures:
+        - name: __dda_zendesk_loader_init
+          description: $ddn.jobs.zendesk-loader.init
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          result_type:
+            type: named
+            name: String
+    capabilities:
+      version: 0.1.6
+      capabilities:
+        query:
+          aggregates: {}
+          variables: {}
+          nested_fields: {}
+        mutation: {}
+        relationships:
+          relation_comparisons: {}
+          order_by_aggregate: {}
+  argumentPresets:
+    - argument: headers
+      value:
+        httpHeaders:
+          forward:
+            - x-hasura-oauth-services
+          additional: {}

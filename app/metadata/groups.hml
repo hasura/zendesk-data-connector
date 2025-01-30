@@ -1,0 +1,158 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: groups
+  fields:
+    - name: created_at
+      type: Timestamp
+    - name: description
+      type: String
+    - name: id
+      type: BigInt
+    - name: name
+      type: String
+    - name: updated_at
+      type: Timestamp
+    - name: url
+      type: String
+  graphql:
+    typeName: groups
+    inputTypeName: groups_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: myduckduckapi
+      dataConnectorObjectType: groups
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: groups
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - created_at
+          - description
+          - id
+          - name
+          - updated_at
+          - url
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: groups_bool_exp
+  operand:
+    object:
+      type: groups
+      comparableFields:
+        - fieldName: created_at
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: description
+          booleanExpressionType: StringBoolExp
+        - fieldName: id
+          booleanExpressionType: BigIntBoolExp
+        - fieldName: name
+          booleanExpressionType: StringBoolExp
+        - fieldName: updated_at
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: url
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: groups_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: groups_agg_exp
+  operand:
+    object:
+      aggregatedType: groups
+      aggregatableFields:
+        - fieldName: created_at
+          aggregateExpression: TimestampAggExp
+        - fieldName: description
+          aggregateExpression: StringAggExp
+        - fieldName: id
+          aggregateExpression: BigIntAggExp
+        - fieldName: name
+          aggregateExpression: StringAggExp
+        - fieldName: updated_at
+          aggregateExpression: TimestampAggExp
+        - fieldName: url
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: groups_agg_exp
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: groups_order_by_exp
+  operand:
+    object:
+      orderedType: groups
+      orderableFields:
+        - fieldName: created_at
+          orderByExpression: TimestampOrderByExp
+        - fieldName: description
+          orderByExpression: StringOrderByExp
+        - fieldName: id
+          orderByExpression: BigIntOrderByExp
+        - fieldName: name
+          orderByExpression: StringOrderByExp
+        - fieldName: updated_at
+          orderByExpression: TimestampOrderByExp
+        - fieldName: url
+          orderByExpression: StringOrderByExp
+      orderableRelationships: []
+  graphql:
+    expressionTypeName: groups_order_by_exp
+
+---
+kind: Model
+version: v2
+definition:
+  name: groups
+  objectType: groups
+  description: |
+    Groups serve as the core element of ticket workflow; support agents are organized into groups and tickets can be assigned to a group only, or to an assigned agent within a group. A ticket can never be assigned to an agent without also being assigned to a group.
+  source:
+    dataConnectorName: myduckduckapi
+    collection: groups
+  filterExpressionType: groups_bool_exp
+  aggregateExpression: groups_agg_exp
+  orderByExpression: groups_order_by_exp
+  graphql:
+    selectMany:
+      queryRootField: groups
+      subscription:
+        rootField: groups
+    selectUniques: []
+    filterInputTypeName: groups_filter_input
+    aggregate:
+      queryRootField: groups_aggregate
+      subscription:
+        rootField: groups_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: groups
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

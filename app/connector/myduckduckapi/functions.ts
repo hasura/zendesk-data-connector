@@ -6,7 +6,7 @@ import {
   transaction,
   Connection,
   Database,
-  tenants,
+  getTenants,
   Tenant,
   TenantToken,
   getTenantById,
@@ -573,7 +573,7 @@ export async function __dda_zendesk_loader_init(
 
   tenant.run();
 
-  tenants.set(token, tenant);
+  getTenants().set(token, tenant);
 
   console.log("loader init tenant", tenantId);
 
@@ -594,7 +594,7 @@ export async function __dda_zendesk_loader_status(
     return `Error in getting the ${OAUTH_PROVIDER_NAME} oauth credentials. Login to ${OAUTH_PROVIDER_NAME}?`;
   }
 
-  const tenant = tenants.get(token);
+  const tenant = getTenants().get(token);
 
   return tenant?.syncState ?? "stopped";
 }

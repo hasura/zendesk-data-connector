@@ -1,5 +1,5 @@
-# include:
-#   - path: app/connector/myduckduckapi/compose.yaml
+include:
+  - path: app/connector/myduckduckapi/compose.yaml
 services:
   engine:
     build:

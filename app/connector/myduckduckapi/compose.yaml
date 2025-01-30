@@ -3,28 +3,27 @@ services:
     build:
       context: .
       dockerfile: .hasura-connector/Dockerfile
+    develop:
+      watch:
+        - action: rebuild
+          path: package.json
+          target: /functions/package.json
+        - action: rebuild
+          path: package-lock.json
+          target: /functions/package-lock.json
+        - action: sync+restart
+          path: ./
+          target: /functions
     environment:
-      DUCKDB_URL: $APP_MYDUCKDUCKAPI_DUCKDB_URL
       DUCKDB_PATH: $APP_MYDUCKDUCKAPI_DUCKDB_PATH
-      ZENDESK_BASE_URL: $APP_MYDUCKDUCKAPI_ZENDESK_BASE_URL
+      DUCKDB_URL: $APP_MYDUCKDUCKAPI_DUCKDB_URL
       FEATURE_MIN_INSTANCES: $APP_MYDUCKDUCKAPI_FEATURE_MIN_INSTANCES
       FEATURE_PERSISTENT_DATA: $APP_MYDUCKDUCKAPI_FEATURE_PERSISTENT_DATA
       HASURA_SERVICE_TOKEN_SECRET: $APP_MYDUCKDUCKAPI_HASURA_SERVICE_TOKEN_SECRET
       OTEL_EXPORTER_OTLP_ENDPOINT: $APP_MYDUCKDUCKAPI_OTEL_EXPORTER_OTLP_ENDPOINT
       OTEL_SERVICE_NAME: $APP_MYDUCKDUCKAPI_OTEL_SERVICE_NAME
+      ZENDESK_BASE_URL: $APP_MYDUCKDUCKAPI_ZENDESK_BASE_URL
     extra_hosts:
       - local.hasura.dev:host-gateway
     ports:
       - 6514:8080
-    develop:
-      watch:
-        - path: package.json
-          target: /functions/package.json
-          action: rebuild
-        - path: package-lock.json
-          target: /functions/package-lock.json
-          action: rebuild
-        # For any other file change, simply copy it into the existing container and restart it
-        - path: ./
-          target: /functions
-          action: sync+restart

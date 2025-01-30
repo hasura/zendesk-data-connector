@@ -3,15 +3,13 @@ version: v2
 definition:
   name: myduckduckapi
   subgraph: app
-  source: hasura/duckduckapi:v0.5.3
+  source: hasura/duckduckapi:v0.6.0
   context: .
   envMapping:
-    DUCKDB_URL:
-      fromEnv: APP_MYDUCKDUCKAPI_DUCKDB_URL
     DUCKDB_PATH:
       fromEnv: APP_MYDUCKDUCKAPI_DUCKDB_PATH
-    ZENDESK_BASE_URL:
-      fromEnv: APP_MYDUCKDUCKAPI_ZENDESK_BASE_URL
+    DUCKDB_URL:
+      fromEnv: APP_MYDUCKDUCKAPI_DUCKDB_URL
     FEATURE_MIN_INSTANCES:
       fromEnv: APP_MYDUCKDUCKAPI_FEATURE_MIN_INSTANCES
     FEATURE_PERSISTENT_DATA:
@@ -22,3 +20,5 @@ definition:
       fromEnv: APP_MYDUCKDUCKAPI_OTEL_EXPORTER_OTLP_ENDPOINT
     OTEL_SERVICE_NAME:
       fromEnv: APP_MYDUCKDUCKAPI_OTEL_SERVICE_NAME
+    ZENDESK_BASE_URL:
+      fromEnv: APP_MYDUCKDUCKAPI_ZENDESK_BASE_URL

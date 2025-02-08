@@ -1,0 +1,53 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DDNJobStatusV1
+  fields:
+    - name: message
+      type: String!
+    - name: ok
+      type: Boolean!
+  graphql:
+    typeName: DDNJobStatusV1
+    inputTypeName: DDNJobStatusV1_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: myduckduckapi
+      dataConnectorObjectType: DDNJobStatusV1
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DDNJobStatusV1
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - message
+          - ok
+
+---
+kind: Command
+version: v1
+definition:
+  name: _ddnZendeskStatus
+  outputType: DDNJobStatusV1!
+  source:
+    dataConnectorName: myduckduckapi
+    dataConnectorCommand:
+      function: _ddnZendeskStatus
+  graphql:
+    rootFieldName: _ddnZendeskStatus
+    rootFieldKind: Query
+  description: $ddn.functions.zendeskStatus
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: _ddnZendeskStatus
+  permissions:
+    - role: admin
+      allowExecution: true
+

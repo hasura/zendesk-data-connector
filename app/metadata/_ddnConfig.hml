@@ -1,0 +1,53 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DDNConfigResponseV1
+  fields:
+    - name: config
+      type: String!
+    - name: version
+      type: Float!
+  graphql:
+    typeName: DDNConfigResponseV1
+    inputTypeName: DDNConfigResponseV1_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: myduckduckapi
+      dataConnectorObjectType: DDNConfigResponseV1
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DDNConfigResponseV1
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - config
+          - version
+
+---
+kind: Command
+version: v1
+definition:
+  name: _ddnConfig
+  outputType: DDNConfigResponseV1!
+  source:
+    dataConnectorName: myduckduckapi
+    dataConnectorCommand:
+      function: _ddnConfig
+  graphql:
+    rootFieldName: _ddnConfig
+    rootFieldKind: Query
+  description: $ddn.config
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: _ddnConfig
+  permissions:
+    - role: admin
+      allowExecution: true
+

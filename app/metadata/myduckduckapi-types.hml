@@ -308,3 +308,13 @@ definition:
   graphql:
     expressionTypeName: BooleanOrderByExp
 
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: myduckduckapi
+  dataConnectorScalarType: Float
+  representation: Float
+  graphql:
+    comparisonExpressionTypeName: Float_comparison_exp
+

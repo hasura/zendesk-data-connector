@@ -1,6 +1,6 @@
 node_modules/
 duck.db
 duck.db.wal
-duckdb-persist
+persist-data/
 github.index.ts
 github.functions.ts

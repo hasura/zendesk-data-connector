@@ -284,6 +284,46 @@ definition:
                 type: named
                 name: UHugeInt
       object_types:
+        DDNConfigResponseV1:
+          fields:
+            config:
+              type:
+                type: named
+                name: String
+            version:
+              type:
+                type: named
+                name: Float
+        DDNJobStatusV1:
+          fields:
+            message:
+              type:
+                type: named
+                name: String
+            ok:
+              type:
+                type: named
+                name: Boolean
+        DDNOAuthProviderCodeLoginRequestV1:
+          fields:
+            code:
+              type:
+                type: named
+                name: String
+            codeVerifier:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            redirectUri:
+              type:
+                type: named
+                name: String
+            tokenEndpoint:
+              type:
+                type: named
+                name: String
         brands:
           description: No description available
           fields:
@@ -323,6 +363,23 @@ definition:
                   type: named
                   name: Timestamp
             url:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+        ddn_tenant_state:
+          description: No description available
+          fields:
+            key:
+              description: No description available
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+            value:
               description: No description available
               type:
                 type: nullable
@@ -691,6 +748,16 @@ definition:
           type: brands
           uniqueness_constraints: {}
           foreign_keys: {}
+        - name: ddn_tenant_state
+          description: No description available
+          arguments:
+            headers:
+              type:
+                type: named
+                name: JSON
+          type: ddn_tenant_state
+          uniqueness_constraints: {}
+          foreign_keys: {}
         - name: groups
           description: No description available
           arguments:
@@ -742,8 +809,14 @@ definition:
           uniqueness_constraints: {}
           foreign_keys: {}
       functions:
-        - name: __dda_zendesk_loader_status
-          description: $ddn.jobs.zendesk-loader.status
+        - name: _ddnConfig
+          description: $ddn.config
+          arguments: {}
+          result_type:
+            type: named
+            name: DDNConfigResponseV1
+        - name: _ddnZendeskStatus
+          description: $ddn.functions.zendeskStatus
           arguments:
             headers:
               type:
@@ -751,18 +824,26 @@ definition:
                 name: JSON
           result_type:
             type: named
-            name: String
+            name: DDNJobStatusV1
       procedures:
-        - name: __dda_zendesk_loader_init
-          description: $ddn.jobs.zendesk-loader.init
+        - name: _ddnZendeskLogin
+          description: $ddn.functions.zendeskLogin
           arguments:
             headers:
               type:
                 type: named
                 name: JSON
+            req:
+              type:
+                type: named
+                name: DDNOAuthProviderCodeLoginRequestV1
+            userConfig:
+              type:
+                type: named
+                name: String
           result_type:
             type: named
-            name: String
+            name: DDNJobStatusV1
     capabilities:
       version: 0.1.6
       capabilities:
@@ -778,6 +859,7 @@ definition:
     - argument: headers
       value:
         httpHeaders:
-          forward:
-            - x-hasura-oauth-services
-          additional: {}
+          forward: []
+          additional:
+            tenantId:
+              sessionVariable: x-hasura-user-id

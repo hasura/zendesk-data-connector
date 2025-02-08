@@ -2,7 +2,12 @@ kind: Subgraph
 version: v2
 definition:
   name: globals
+  envMapping:
+    JWT_PUBLIC_KEY:
+      fromEnv: JWT_PUBLIC_KEY
   generator:
     rootPath: .
   includePaths:
-    - metadata
+    - metadata/auth-config.hml
+    - metadata/compatibility-config.hml
+    - metadata/graphql-config.hml

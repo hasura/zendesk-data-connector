@@ -1,0 +1,64 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DDNOAuthProviderCodeLoginRequestV1
+  fields:
+    - name: code
+      type: String!
+    - name: codeVerifier
+      type: String
+    - name: redirectUri
+      type: String!
+    - name: tokenEndpoint
+      type: String!
+  graphql:
+    typeName: DDNOAuthProviderCodeLoginRequestV1
+    inputTypeName: DDNOAuthProviderCodeLoginRequestV1_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: myduckduckapi
+      dataConnectorObjectType: DDNOAuthProviderCodeLoginRequestV1
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DDNOAuthProviderCodeLoginRequestV1
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - code
+          - codeVerifier
+          - redirectUri
+          - tokenEndpoint
+
+---
+kind: Command
+version: v1
+definition:
+  name: _ddnZendeskLogin
+  outputType: DDNJobStatusV1!
+  arguments:
+    - name: req
+      type: DDNOAuthProviderCodeLoginRequestV1!
+    - name: userConfig
+      type: String!
+  source:
+    dataConnectorName: myduckduckapi
+    dataConnectorCommand:
+      procedure: _ddnZendeskLogin
+  graphql:
+    rootFieldName: _ddnZendeskLogin
+    rootFieldKind: Mutation
+  description: $ddn.functions.zendeskLogin
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: _ddnZendeskLogin
+  permissions:
+    - role: admin
+      allowExecution: true
+

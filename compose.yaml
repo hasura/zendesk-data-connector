@@ -35,6 +35,8 @@ services:
       - 4388:4318
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    extra_hosts:
+      - local.hasura.dev:host-gateway
   promptql-playground:
     environment:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}

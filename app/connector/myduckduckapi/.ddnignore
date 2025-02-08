@@ -5,4 +5,4 @@ node_modules/
 compose.yaml
 duck.db
 duck.db.bak
-duckdb-persist/
+persist-data/

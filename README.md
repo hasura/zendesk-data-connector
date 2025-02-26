@@ -37,3 +37,12 @@ On the OAuth Playground tab
 - Login and run the sync job
 
 Use the PromptQL playground
+
+# Hasura PromptQL app deployment
+
+edit the .env.cloud file
+
+ddn supergraph build create --no-build-connectors
+
+don't merge this branch to master
+use `git pull --rebase` to update the branch

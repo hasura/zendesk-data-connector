@@ -98,3 +98,13 @@ If you have role admin in Zendesk, all tickets are synced.
 For other roles, [archived tickets](https://support.zendesk.com/hc/en-us/articles/4408887617050-About-ticket-archiving) are not synced.
 
 Only data that your Zendesk user can access is synced to your database instance.
+
+# Hasura PromptQL app deployment
+
+edit the .env.cloud file
+
+ddn supergraph build create --no-build-connectors
+
+don't merge this branch to master
+rebase this branch on top of master
+

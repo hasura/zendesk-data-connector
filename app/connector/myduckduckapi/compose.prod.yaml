@@ -1,0 +1,11 @@
+services:
+  app_zendesk_data_connector:
+    build:
+      context: .
+      dockerfile: .hasura-connector/Dockerfile
+    env_file:
+      - .env.prod
+    volumes:
+      - /home/nxo/promptql-data/zendesk-data-connector:/etc/connector/persist-data
+    ports:
+      - 6201:8080

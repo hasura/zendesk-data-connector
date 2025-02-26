@@ -48,7 +48,7 @@ export async function _ddnConfig(): Promise<DDNConfigResponseV1> {
             oauthDetails: {
               clientId: ZENDESK_CLIENT_ID,
               scopes: "read",
-              pkceRequired: false,
+              pkceRequired: process.env.ZENDESK_PKCE_REQUIRED === "true",
             },
           },
         ],

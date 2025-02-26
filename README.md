@@ -5,7 +5,10 @@
 ```bash
 cp .env.development .env
 
-# edit .env to set the zendesk oauth client id and secret
+# edit .env to set the zendesk environment variables
+# (required) ZENDESK_CLIENT_ID=
+# (optional) ZENDESK_CLIENT_SECRET=
+# (optional) ZENDESK_PKCE_REQUIRED=true
 
 ddn supergraph build local
 

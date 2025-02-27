@@ -209,11 +209,17 @@ export class TenantManager {
         await this.syncBrands();
         await this.syncGroups();
 
-        // Wait some time before repeating
         this.log(
-          `Completed sync. Waiting for ${SYNC_INTERVAL} seconds before next sync...`
+          `Completed sync. Waiting for ${
+            SYNC_INTERVAL / 1000
+          } seconds before next sync...`
         );
-        await delay(SYNC_INTERVAL);
+
+        const DELAY_INTERVAL = 5000; // 5 seconds
+        for (let i = 0; i < Math.floor(SYNC_INTERVAL / DELAY_INTERVAL); i++) {
+          this.assertRunning();
+          await delay(DELAY_INTERVAL);
+        }
       }
     } catch (e) {
       this.log("Error in sync loop", e);

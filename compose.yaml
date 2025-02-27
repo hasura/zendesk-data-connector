@@ -40,7 +40,7 @@ services:
   promptql-playground:
     environment:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://console.hasura.io}
       ENGINE_URL: ${HASURA_DDN_URL:-http://engine:3000/v1/sql}
       LLM: ${LLM:-anthropic}
       OPENAI_API_KEY: ${OPENAI_API_KEY}

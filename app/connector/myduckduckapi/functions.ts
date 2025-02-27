@@ -13,6 +13,22 @@ import {
 } from "@hasura/ndc-duckduckapi";
 
 const tenants = new Map<string, TenantManager>();
+
+// Add cleanup function
+async function cleanup() {
+  console.log("Cleaning up databases...");
+  for (const [tenantId, tenant] of tenants) {
+    console.log(`Closing database for tenant ${tenantId}...`);
+    await tenant.cleanup();
+  }
+  console.log("All databases closed.");
+  process.exit(0);
+}
+
+// Register cleanup handler
+process.on("SIGINT", cleanup);
+process.on("SIGTERM", cleanup);
+
 function getTenant(tenantId: string): TenantManager {
   let tenant = tenants.get(tenantId);
   if (!tenant) {

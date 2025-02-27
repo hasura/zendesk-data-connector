@@ -774,6 +774,21 @@ export class TenantManager {
       this.debug.bind(this)
     );
   }
+
+  async cleanup() {
+    try {
+      // Stop any ongoing sync
+      await this.stopSync();
+
+      // Close the database connection if it exists
+      if (this.db) {
+        await this.db.close();
+        this.db = undefined as any;
+      }
+    } catch (e) {
+      console.error(`Error cleaning up tenant ${this.tenantId}:`, e);
+    }
+  }
 }
 
 async function fetchWithRetry(

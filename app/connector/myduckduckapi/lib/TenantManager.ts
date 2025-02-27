@@ -36,10 +36,13 @@ class SyncInterruptedError extends Error {
   }
 }
 
+type BooleanString = "true" | "false";
+
 export class TenantManager {
   db!: Database;
   tenantToken: string | undefined;
   serviceUserId: string | undefined;
+  isAdminUser: BooleanString | undefined;
   subdomain: string | undefined;
   baseUrl: string | undefined;
 
@@ -70,7 +73,10 @@ export class TenantManager {
       );
     }
 
-    const serviceUserId = await this.getServiceUserId(token, subdomain);
+    const { serviceUserId, isAdminUser } = await this.getServiceUserDetails(
+      token,
+      subdomain
+    );
 
     await transaction(this.db, async (conn) => {
       await conn.run(
@@ -86,6 +92,13 @@ export class TenantManager {
          ON CONFLICT(key) DO UPDATE SET value=excluded.value`,
         serviceUserId
       );
+
+      await conn.run(
+        `INSERT INTO ddn_tenant_state (key, value)
+         VALUES ('isAdminUser', ?)
+         ON CONFLICT(key) DO UPDATE SET value=excluded.value`,
+        isAdminUser
+      );
     });
   }
 
@@ -94,6 +107,7 @@ export class TenantManager {
 
     let tenantToken: string | undefined;
     let serviceUserId: string | undefined;
+    let isAdminUser: BooleanString | undefined;
     let subdomain: string | undefined;
 
     await this.initDb();
@@ -120,6 +134,16 @@ export class TenantManager {
 
     {
       const rows = await this.db.all(
+        `SELECT value FROM ddn_tenant_state WHERE key = 'isAdminUser'`
+      );
+
+      if (rows[0].value) {
+        isAdminUser = rows[0].value;
+      }
+    }
+
+    {
+      const rows = await this.db.all(
         `SELECT value FROM ddn_tenant_state WHERE key = 'subdomain'`
       );
 
@@ -128,20 +152,21 @@ export class TenantManager {
       }
     }
 
-    if (
-      this.serviceUserId &&
-      serviceUserId &&
-      this.serviceUserId !== serviceUserId
-    ) {
+    if (this.serviceUserId && this.serviceUserId !== serviceUserId) {
       reset = true;
     }
 
-    if (this.subdomain && subdomain && this.subdomain !== subdomain) {
+    if (this.isAdminUser && this.isAdminUser !== isAdminUser) {
+      reset = true;
+    }
+
+    if (this.subdomain && this.subdomain !== subdomain) {
       reset = true;
     }
 
     if (tenantToken) this.tenantToken = tenantToken;
     if (serviceUserId) this.serviceUserId = serviceUserId;
+    if (isAdminUser) this.isAdminUser = isAdminUser;
     if (subdomain) this.subdomain = subdomain;
 
     this.baseUrl = subdomain
@@ -169,14 +194,17 @@ export class TenantManager {
     try {
       // Continuous sync loop
       while (this.syncState === SyncState.Running) {
-        // 1) Sync incremental models (tickets, users)
-        // await this.syncIncremental("tickets");
-        // await this.syncIncremental("users");
+        if (this.isAdminUser === "true") {
+          // Sync incremental models
+          await this.syncIncremental("tickets");
+          await this.syncIncremental("users");
+        } else {
+          // Sync list-cursor models
+          await this.syncTickets();
+          await this.syncUsers();
+        }
 
-        // 2) Sync list-cursor models
-        await this.syncTickets();
-        await this.syncUsers();
-
+        // Sync list-cursor models
         await this.syncOrganizations();
         await this.syncBrands();
         await this.syncGroups();
@@ -715,14 +743,20 @@ export class TenantManager {
     this.log("Finished sync for groups");
   }
 
-  async getServiceUserId(token: string, subdomain: string): Promise<string> {
+  async getServiceUserDetails(
+    token: string,
+    subdomain: string
+  ): Promise<{ serviceUserId: string; isAdminUser: BooleanString }> {
     const data = await fetchWithRetry(
       `https://${subdomain}.zendesk.com/api/v2/users/me.json`,
       token,
       () => true,
       this.debug.bind(this)
     );
-    return String(data?.user?.id);
+    return {
+      serviceUserId: String(data?.user?.id),
+      isAdminUser: data?.user?.role === "admin" ? "true" : "false",
+    };
   }
 
   /**
